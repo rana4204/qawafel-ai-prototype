@@ -1,0 +1,61 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+virtualenv/
+virtual_env/
+
+# Python bytecode and test/tool caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local environment configuration and secrets
+.env
+.env.*
+.streamlit/secrets.toml
+.streamlit/secrets.*
+.streamlit/secrets/
+**/.streamlit/secrets.toml
+**/.streamlit/secrets.*
+**/.streamlit/secrets/
+secrets.toml
+secrets.yaml
+secrets.yml
+secrets.json
+*.secret
+*.secrets
+credentials.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs, temporary files, and local databases
+*.log
+logs/
+*.tmp
+*.temp
+*.swp
+*.bak
+*~
+*.db
+*.sqlite
+*.sqlite3
+
+# Build and packaging outputs
+build/
+dist/
+*.egg-info/
+
+# Operating system files
+.DS_Store
+Thumbs.db

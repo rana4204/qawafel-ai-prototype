@@ -1,0 +1,12 @@
+{
+    "company_name": "Synthetic Test Company Beta",
+    "cr_number": "TEST-CR-002",
+    "data_classification": "Synthetic test data only; no real company or bank records.",
+    "industry": "Retail Supplies",
+    "city": "Riyadh",
+    "country": "Saudi Arabia",
+    "establishment_date": "2019-03-15",
+    "currency": "SAR",
+    "vat_rate": 0.15,
+    "description": "Synthetic test scenario: incomplete and inconsistent records."
+}

@@ -1,0 +1,12 @@
+{
+    "company_name": "Synthetic Test Company Epsilon",
+    "cr_number": "TEST-CR-005",
+    "data_classification": "Synthetic test data only; no real company or bank records.",
+    "industry": "Distribution",
+    "city": "Riyadh",
+    "country": "Saudi Arabia",
+    "establishment_date": "2019-03-15",
+    "currency": "SAR",
+    "vat_rate": 0.15,
+    "description": "Synthetic test scenario: partial payments and complex transactions."
+}
