@@ -125,11 +125,12 @@ No `.env` file, API key, or bank credentials are required to run the current pro
 
 The synthetic sample datasets are available in the `sample_data/` directory.
 
-Each scenario folder contains:
+Each scenario folder contains only the financial documents used by the sample pipeline:
 
-- `company_profile.json` — fictional company information.
-- `invoices.xlsx` — synthetic sales invoice records.
-- `bank_statement.pdf` — synthetic bank statement transactions.
+- `invoices.xlsx` - synthetic sales invoice records.
+- `bank_statement.pdf` - synthetic bank statement transactions.
+
+The Client Portal keeps its minimal synthetic demo company context in application code; sample processing and validation do not require a JSON company profile.
 
 The five scenarios demonstrate different processing and validation cases:
 
@@ -203,7 +204,7 @@ The Client Portal displays the latest known status and the application's status 
 
 ### Assumptions
 
-- The prototype uses synthetic company profiles, invoices, and bank statements.
+- The prototype uses synthetic invoices and bank statements; the Client Portal has a separate embedded synthetic demo company context.
 - The uploaded invoice workbook follows the expected structure used by the application.
 - Bank statements contain selectable PDF text that can be extracted using `pdfplumber`.
 - Invoice and transaction records contain sufficient information to attempt payment matching.

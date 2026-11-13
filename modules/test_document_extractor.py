@@ -1,13 +1,13 @@
 
 from pathlib import Path
-from document_extractor import load_company_dataset
+from modules.document_extractor import load_company_dataset
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 sample_folder = PROJECT_DIR / "sample_data" / "sample_01_healthy"
 
 data = load_company_dataset(sample_folder)
 
-print("\n--- Company Information ---")
+print("\n--- Synthetic Sample Context ---")
 print(data["company"])
 
 print("\n--- Invoices ---")

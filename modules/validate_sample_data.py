@@ -3,11 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from modules.document_extractor import (
-    load_bank_transactions_pdf,
-    load_company_profile,
-    load_invoices,
-)
+from modules.document_extractor import load_company_dataset
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 SAMPLE_DIR = PROJECT_DIR / "sample_data"
@@ -17,9 +13,9 @@ def validate_sample(folder_name):
 
     path = SAMPLE_DIR / folder_name
 
-    company = load_company_profile(path / "company_profile.json")
-    invoices = load_invoices(path / "invoices.xlsx")
-    bank = load_bank_transactions_pdf(path / "bank_statement.pdf")
+    dataset = load_company_dataset(path)
+    invoices = dataset["invoices"]
+    bank = dataset["bank_transactions"]
 
     duplicate_count = invoices["invoice_id"].duplicated().sum()
     missing_customers = invoices["customer_name"].isna().sum()
@@ -51,7 +47,7 @@ def validate_sample(folder_name):
     )
 
     print("\n" + "=" * 45)
-    print(company["company_name"])
+    print(f"Synthetic scenario: {folder_name}")
     print("=" * 45)
 
     print(f"Total invoices: {len(invoices)}")

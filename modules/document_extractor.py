@@ -339,27 +339,27 @@ def load_bank_transactions_pdf(file_path):
 
 
 # ==========================================
-# 5. LOAD COMPLETE COMPANY DATASET
+# 5. LOAD SYNTHETIC FINANCIAL DATASET
 # ==========================================
 
 def load_company_dataset(sample_folder):
+    """Load sample invoices and transactions without a company profile file.
 
+    Sample records use SAR. The returned ``company`` mapping is only minimal
+    synthetic analysis context; it is not loaded from or represented by a
+    company registration document.
+    """
     sample_folder = Path(sample_folder)
-
-    company = load_company_profile(
-        sample_folder / "company_profile.json"
-    )
-
-    invoices = load_invoices(
-        sample_folder / "invoices.xlsx"
-    )
-
+    invoices = load_invoices(sample_folder / "invoices.xlsx")
     bank_transactions = load_bank_transactions_pdf(
         sample_folder / "bank_statement.pdf"
     )
-
     return {
-        "company": company,
+        "company": {
+            "company_name": "Synthetic Sample Data",
+            "currency": "SAR",
+            "data_classification": "Synthetic test context; no company profile supplied.",
+        },
         "invoices": invoices,
-        "bank_transactions": bank_transactions
+        "bank_transactions": bank_transactions,
     }

@@ -1,5 +1,4 @@
 
-import json
 import random
 from pathlib import Path
 from datetime import date, timedelta
@@ -44,65 +43,30 @@ CUSTOMERS = [
 SCENARIOS = {
     "sample_01_healthy": {
         "company_name": "Synthetic Test Company Alpha",
-        "test_record_id": "001",
-        "industry": "Wholesale Trading",
-        "description": "Synthetic test scenario: healthy, consistent financial records.",
         "monthly_revenue": 90000,
         "issue": "none"
     },
     "sample_02_data_issues": {
         "company_name": "Synthetic Test Company Beta",
-        "test_record_id": "002",
-        "industry": "Retail Supplies",
-        "description": "Synthetic test scenario: incomplete and inconsistent records.",
         "monthly_revenue": 75000,
         "issue": "data_issues"
     },
     "sample_03_cashflow": {
         "company_name": "Synthetic Test Company Gamma",
-        "test_record_id": "003",
-        "industry": "Retail",
-        "description": "Synthetic test scenario: collection and cash-flow challenges.",
         "monthly_revenue": 100000,
         "issue": "cashflow"
     },
     "sample_04_growth": {
         "company_name": "Synthetic Test Company Delta",
-        "test_record_id": "004",
-        "industry": "Retail and Distribution",
-        "description": "Synthetic test scenario: increasing monthly revenue.",
         "monthly_revenue": 70000,
         "issue": "growth"
     },
     "sample_05_complex": {
         "company_name": "Synthetic Test Company Epsilon",
-        "test_record_id": "005",
-        "industry": "Distribution",
-        "description": "Synthetic test scenario: partial payments and complex transactions.",
         "monthly_revenue": 110000,
         "issue": "complex"
     }
 }
-
-
-# ==========================================
-# 2. COMPANY PROFILE GENERATOR
-# ==========================================
-
-def generate_company_profile(config):
-
-    return {
-        "company_name": config["company_name"],
-        "cr_number": f"TEST-CR-{config['test_record_id']}",
-        "data_classification": "Synthetic test data only; no real company or bank records.",
-        "industry": config["industry"],
-        "city": "Riyadh",
-        "country": "Saudi Arabia",
-        "establishment_date": "2019-03-15",
-        "currency": "SAR",
-        "vat_rate": VAT_RATE,
-        "description": config["description"]
-    }
 
 
 # ==========================================
@@ -364,8 +328,7 @@ def save_bank_statement_pdf(profile, transactions, output_path):
         ),
         Paragraph(
             f"<b>Account holder:</b> {escape(profile['company_name'])}<br/>"
-            f"<b>Commercial Registration:</b> {escape(profile['cr_number'])}<br/>"
-            "<b>Account type:</b> Business current account<br/>"
+            "<b>Account type:</b> Synthetic business account<br/>"
             f"<b>Currency:</b> {profile['currency']}<br/>"
             "<b>Statement period:</b> "
             f"{statement_dates.min():%d %b %Y} – "
@@ -434,27 +397,18 @@ def generate_sample(folder_name, config):
     sample_path = SAMPLE_DIR / folder_name
     sample_path.mkdir(parents=True, exist_ok=True)
 
-    profile = generate_company_profile(config)
+    # The company label exists only in memory for the synthetic PDF header.
+    # It is not a company profile and is not written as a separate data file.
+    profile = {
+        "company_name": config["company_name"],
+        "currency": "SAR",
+    }
     invoices = generate_invoices(config)
 
     transactions = generate_bank_transactions(
         invoices,
         config["issue"]
     )
-
-    # Save company profile
-    with open(
-        sample_path / "company_profile.json",
-        "w",
-        encoding="utf-8"
-    ) as file:
-
-        json.dump(
-            profile,
-            file,
-            indent=4,
-            ensure_ascii=False
-        )
 
     # Keep the invoice table as the first sheet for the existing data loader.
     # A separate visible notice sheet labels the workbook as synthetic.

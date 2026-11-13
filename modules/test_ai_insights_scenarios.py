@@ -13,7 +13,7 @@ from modules.ai_insights import generate_financial_insights
 from modules.data_validator import validate_dataset
 from modules.document_extractor import (
     load_bank_transactions_pdf,
-    load_company_profile,
+    load_company_dataset,
     load_invoices,
 )
 from modules.financial_analyzer import analyze_financial_data
@@ -292,11 +292,11 @@ class RealSampleDatasetScenarios(unittest.TestCase):
                 self.assertTrue((directory / "invoices.xlsx").is_file())
                 self.assertTrue((directory / "bank_statement.pdf").is_file())
                 self.assertFalse((directory / "bank_transactions.xlsx").exists())
-                profile = load_company_profile(directory / "company_profile.json")
-                invoices = load_invoices(directory / "invoices.xlsx")
-                transactions = load_bank_transactions_pdf(
-                    directory / "bank_statement.pdf"
-                )
+                dataset = load_company_dataset(directory)
+                profile = dataset["company"]
+                invoices = dataset["invoices"]
+                transactions = dataset["bank_transactions"]
+                self.assertFalse((directory / "company_profile.json").exists())
                 invoices_before = invoices.copy(deep=True)
                 transactions_before = transactions.copy(deep=True)
                 profile_before = copy.deepcopy(profile)
@@ -465,11 +465,11 @@ class RealSampleDatasetScenarios(unittest.TestCase):
 
     def test_sample_05_confirmed_collections_exclude_unmatched_and_ambiguous(self) -> None:
         directory = _PROJECT_ROOT / "sample_data" / "sample_05_complex"
-        profile = load_company_profile(directory / "company_profile.json")
-        invoices = load_invoices(directory / "invoices.xlsx")
-        transactions = load_bank_transactions_pdf(
-            directory / "bank_statement.pdf"
-        )
+        dataset = load_company_dataset(directory)
+        profile = dataset["company"]
+        invoices = dataset["invoices"]
+        transactions = dataset["bank_transactions"]
+        self.assertFalse((directory / "company_profile.json").exists())
         validation = validate_dataset({
             "invoices": invoices,
             "bank_transactions": transactions,
